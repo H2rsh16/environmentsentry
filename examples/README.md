@@ -1,29 +1,29 @@
-# environmentsentrry Example Project
+# environmentsentry Example Project
 
-Run these commands to see environmentsentrry in action:
+Run these commands to see environmentsentry in action:
 
 ```bash
 # Install dependencies
 npm install
 
 # Fix/create .env from .env.sample
-environmentsentrry fix
+environmentsentry fix
 
 # Check all environment variables
-environmentsentrry check
+environmentsentry check
 
 # Scan source code for env usage
-environmentsentrry usage
+environmentsentry usage
 
 # Generate .env.sample from source code
-environmentsentrry example
+environmentsentry example
 
 # Initialize secure vault
-environmentsentrry vault init
+environmentsentry vault init
 
 # Store a sensitive value
-environmentsentrry vault set DATABASE_URL "postgres://..."
+environmentsentry vault set DATABASE_URL "postgres://..."
 
 # Production setup
-environmentsentrry prod --force
+environmentsentry prod --force
 ```

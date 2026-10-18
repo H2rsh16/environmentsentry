@@ -3,8 +3,8 @@ import * as crypto from "crypto";
 import * as fs from "fs";
 import * as path from "path";
 
-const DB_NAME = ".environmentsentrry-vault.sqlite";
-const KEY_FILE = ".environmentsentrry-vault.key";
+const DB_NAME = ".environmentsentry-vault.sqlite";
+const KEY_FILE = ".environmentsentry-vault.key";
 
 const VAULT_VERSION = 1;
 const CIPHER_ALGORITHM = "aes-256-gcm";

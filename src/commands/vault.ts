@@ -7,6 +7,7 @@ import {
   renderSection,
   renderSuccess,
   renderError,
+  renderWarn,
   renderInfo,
   renderKeyValue,
 } from "../utils/table";
@@ -14,8 +15,8 @@ import {
 export function runVaultInit(root: string): { ok: boolean } {
   const vault = new Vault(root);
   vault.close();
-  console.log(renderHeader("environmentsentrry vault init", "Encrypted vault database initialized"));
-  console.log(renderSuccess(`Vault initialized at ${root}/.environmentsentrry-vault.sqlite`));
+  console.log(renderHeader("environmentsentry vault init", "Encrypted vault database initialized"));
+  console.log(renderSuccess(`Vault initialized at ${root}/.environmentsentry-vault.sqlite`));
   console.log("");
   console.log(renderSection("Encryption details"));
   console.log(renderKeyValue("Algorithm", CIPHER_ALGORITHM));
@@ -50,7 +51,7 @@ export function runVaultGet(root: string, key: string, reveal: boolean): { ok: b
     console.log(renderError(`${pc.bold(key)} not found in vault.`));
     return { ok: false };
   }
-  console.log(renderHeader(`environmentsentrry vault get ${key}`, "Vault value retrieval"));
+  console.log(renderHeader(`environmentsentry vault get ${key}`, "Vault value retrieval"));
   if (reveal) {
     console.log(renderKeyValue("Value", value));
     console.log(renderWarn("Plaintext displayed. Handle with care."));
@@ -67,7 +68,7 @@ export function runVaultList(root: string): { ok: boolean } {
   const vault = new Vault(root);
   const entries = vault.list();
   vault.close();
-  console.log(renderHeader("environmentsentrry vault list", "Stored vault keys"));
+  console.log(renderHeader("environmentsentry vault list", "Stored vault keys"));
   if (entries.length === 0) {
     console.log(renderInfo("Vault is empty."));
     return { ok: true };
@@ -82,7 +83,7 @@ export function runVaultList(root: string): { ok: boolean } {
 }
 
 export function runVaultInfo(root: string): { ok: boolean } {
-  console.log(renderHeader("environmentsentrry vault info", "Vault encryption algorithm details"));
+  console.log(renderHeader("environmentsentry vault info", "Vault encryption algorithm details"));
   console.log("");
   console.log(renderSection("Algorithm specification"));
   console.log(renderKeyValue("Cipher", CIPHER_ALGORITHM));

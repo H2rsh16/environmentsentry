@@ -79,7 +79,7 @@ function statusColor(status: string): (s: string) => string {
 
 function printCheckTable(root: string, reports: Array<{ dir: string; result: DiagnosisResult }>): void {
   console.log("");
-  console.log(renderHeader("environmentsentrry check", "Environment variable diagnosis"));
+  console.log(renderHeader("environmentsentry check", "Environment variable diagnosis"));
   console.log(pc.dim(`   Root: ${root}`));
   console.log("");
 
@@ -97,7 +97,7 @@ function printCheckTable(root: string, reports: Array<{ dir: string; result: Dia
     const rows = result.issues.map((issue) => ({
       project,
       key: pc.bold(issue.key),
-      status: renderStatusBadge(issue.status),
+      status: renderStatusBadge(issue.status ?? "ok"),
       value: maskValue(),
       hash: hashValue(issue.value),
       suggestion: issue.suggestion ?? "—",
@@ -134,7 +134,7 @@ function printCheckTable(root: string, reports: Array<{ dir: string; result: Dia
   console.log(renderSummaryBox(totalVars, totalOk, totalIssues, "All projects"));
   console.log("");
   if (totalIssues > 0) {
-    console.log(renderWarn("Quick fix: run  environmentsentrry fix   (inside each project) to patch missing keys"));
+    console.log(renderWarn("Quick fix: run  environmentsentry fix   (inside each project) to patch missing keys"));
     console.log("");
   } else {
     console.log(renderSuccess("All environment variables across all projects look good!"));

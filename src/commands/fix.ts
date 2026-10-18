@@ -10,6 +10,7 @@ import {
   renderSuccess,
   renderWarn,
   renderInfo,
+  renderError,
 } from "../utils/table";
 
 interface FixOptions { file: string; example: string; dryRun?: boolean; }
@@ -26,14 +27,14 @@ export async function runFix(opts: FixOptions): Promise<boolean> {
   if (!detected.envExists) {
     const content = scaffoldEnv(expected, opts.example);
     if (opts.dryRun) {
-      console.log(renderHeader("environmentsentrry fix (dry-run)", "Would create " + opts.file));
+      console.log(renderHeader("environmentsentry fix (dry-run)", "Would create " + opts.file));
       console.log("");
       console.log(content);
       return true;
     }
     safeWriteFile(detected.envPath, content);
     console.log(renderSuccess(`Created ${opts.file} from ${opts.example}`));
-    console.log(renderInfo("Now fill in your real values, then run: environmentsentrry check"));
+    console.log(renderInfo("Now fill in your real values, then run: environmentsentry check"));
     return true;
   }
 
@@ -45,9 +46,9 @@ export async function runFix(opts: FixOptions): Promise<boolean> {
     return true;
   }
 
-  const additions = "\n\n# Added by environmentsentrry — fill these in:\n" + missing.map((v) => `${v.key}=`).join("\n") + "\n";
+  const additions = "\n\n# Added by environmentsentry — fill these in:\n" + missing.map((v) => `${v.key}=`).join("\n") + "\n";
   if (opts.dryRun) {
-    console.log(renderHeader("environmentsentrry fix (dry-run)", "Would append " + missing.length + " keys to " + opts.file));
+    console.log(renderHeader("environmentsentry fix (dry-run)", "Would append " + missing.length + " keys to " + opts.file));
     console.log("");
     console.log(additions);
     return true;
@@ -56,6 +57,6 @@ export async function runFix(opts: FixOptions): Promise<boolean> {
   const existing = fileExists(detected.envPath) ? fs.readFileSync(detected.envPath, "utf8") : "";
   safeWriteFile(detected.envPath, existing + additions);
   console.log(renderSuccess(`Appended ${missing.length} missing keys to ${opts.file}`));
-  console.log(renderInfo("Fill in their values, then run: environmentsentrry check"));
+  console.log(renderInfo("Fill in their values, then run: environmentsentry check"));
   return true;
 }

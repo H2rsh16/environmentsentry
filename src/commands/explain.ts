@@ -16,7 +16,7 @@ export async function runExplain(opts: ExplainOptions): Promise<void> {
   }
   const result = explain({ command: opts.command, exitCode: opts.exitCode, stderr: opts.stderr });
 
-  console.log(renderHeader("environmentsentrry explain", "Error diagnosis"));
+  console.log(renderHeader("environmentsentry explain", "Error diagnosis"));
   console.log("");
   console.log(renderSection("What happened:"));
   console.log("   " + result.cause + "\n");

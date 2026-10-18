@@ -17,7 +17,7 @@ import {
 } from "./utils/table";
 
 const program = new Command();
-program.name("environmentsentrry")
+program.name("environmentsentry")
   .description("🩺 Deterministic, offline-first environment variable scanner.\nDiagnose missing/invalid env vars, explain errors in plain English, and fix them.")
   .version(require("../package.json").version, "-v, --version", "print version")
   .helpOption("-h, --help", "show help");
@@ -96,7 +96,7 @@ vault.command("remove <key>").description("Remove a key from the vault").action(
 
 const args = process.argv.slice(2);
 if (args.length === 0) {
-  console.log(renderHeader("environmentsentrry", "Deterministic, offline-first env scanner"));
+  console.log(renderHeader("environmentsentry", "Deterministic, offline-first env scanner"));
   console.log("");
   console.log(renderSection("Available commands"));
   console.log("  check     Diagnose env vars against .env.example (styled table)");
@@ -109,7 +109,7 @@ if (args.length === 0) {
   console.log("  prod      Validate, create .env.production, and run tests");
   console.log("  vault     Encrypted vault for env values (AES-256-GCM)");
   console.log("");
-  console.log(renderInfo("Run: environmentsentrry -h   for full help"));
+  console.log(renderInfo("Run: environmentsentry -h   for full help"));
   console.log("");
   process.exit(0);
 } else {

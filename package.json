@@ -1,5 +1,5 @@
 {
-  "name": "environmentsentrry",
+  "name": "environmentsentry",
   "version": "1.0.0",
   "description": "Deterministic, offline-first env scanner. Diagnose missing/invalid environment variables, explain errors in plain English, and fix them across any project size.",
   "keywords": [
@@ -18,7 +18,7 @@
   ],
   "author": {
     "name": "Harsh Ovhal",
-    "email": "contact@environmentsentrry.dev",
+    "email": "contact@environmentsentry.dev",
     "url": "https://github.com/H2rsh16"
   },
   "license": "MIT",
@@ -26,7 +26,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "environmentsentrry": "dist/cli.js"
+    "environmentsentry": "dist/cli.js"
   },
   "files": [
     "dist",
@@ -58,12 +58,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/H2rsh16/environmentsentrry.git"
+    "url": "https://github.com/H2rsh16/environmentsentry.git"
   },
   "bugs": {
-    "url": "https://github.com/H2rsh16/environmentsentrry/issues"
+    "url": "https://github.com/H2rsh16/environmentsentry/issues"
   },
-  "homepage": "https://github.com/H2rsh16/environmentsentrry#readme",
+  "homepage": "https://github.com/H2rsh16/environmentsentry#readme",
   "publishConfig": {
     "access": "public"
   }

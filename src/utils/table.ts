@@ -51,7 +51,10 @@ export function renderTable(columns: TableColumn[], rows: Array<Record<string, s
   const rowLines = rows.map((row) => {
     const cells = cols.map((c) => {
       let text = row[c.key] || "";
-      if (c.color) text = STATUS_COLOR[c.color](text);
+      if (c.color) {
+        const colorFn = STATUS_COLOR[c.color];
+        if (colorFn) text = colorFn(text);
+      }
       return " " + padText(text, c.width, c.align) + " ";
     });
     return BOX.v + cells.join(BOX.v) + BOX.v;
@@ -61,7 +64,7 @@ export function renderTable(columns: TableColumn[], rows: Array<Record<string, s
 }
 
 export function renderStatusBadge(status: string): string {
-  const color = STATUS_COLOR[status] ?? STATUS_COLOR.default;
+  const color = STATUS_COLOR[status] ?? STATUS_COLOR.default ?? ((s: string) => s);
   const label = status.toUpperCase().padEnd(8);
   return ` ${color(pc.bold(label))} `;
 }

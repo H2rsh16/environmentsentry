@@ -53,12 +53,12 @@ export function scanUsage(root: string): ScanResult {
   return { used, files };
 }
 
-export function unusedKeys(used: Map<string, UsageRef[]>, exampleVars: string[]): string[] {
+export function unusedKeys(used: Map<string, any[]>, exampleVars: string[]): string[] {
   const usedKeys = new Set(used.keys());
   return exampleVars.filter((k) => !usedKeys.has(k));
 }
 
-export function usedNotInExample(used: Map<string, UsageRef[]>, exampleVars: string[]): string[] {
+export function usedNotInExample(used: Map<string, any[]>, exampleVars: string[]): string[] {
   const exampleKeys = new Set(exampleVars);
   return Array.from(used.keys()).filter((k) => !exampleKeys.has(k));
 }

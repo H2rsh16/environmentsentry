@@ -1,8 +1,8 @@
-# 🩺 environmentsentrry
+# 🩺 environmentsentry
 
 Deterministic, offline-first env scanner. Diagnose missing/invalid environment variables, explain errors in plain English, and fix them across any project size — small, big, large, or huge.
 
-[![npm version](https://img.shields.io/npm/v/environmentsentrry.svg)](https://npmjs.com/package/environmentsentrry)
+[![npm version](https://img.shields.io/npm/v/environmentsentry.svg)](https://npmjs.com/package/environmentsentry)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node](<https://img.shields.io/badge/node-%3E=18-blue.svg>)](https://nodejs.org)
 
@@ -11,21 +11,21 @@ Deterministic, offline-first env scanner. Diagnose missing/invalid environment v
 ## Commands
 
 ```
-environmentsentrry check
-environmentsentrry fix
-environmentsentrry init
-environmentsentrry explain -c "npm run build"
-environmentsentrry scan [-r <root>] [-d <depth>] [--json] [--strict] [--include <glob>] [--exclude <glob>]
-environmentsentrry usage [-r <root>] [--json] [--watch] [--include <glob>] [--exclude <glob>]
-environmentsentrry example [-r <root>] [-o <out>] [--include <glob>] [--exclude <glob>]
-environmentsentrry prod [-r <root>] [--force]
-environmentsentrry vault init
-environmentsentrry vault info
-environmentsentrry vault set <key> <value>
-environmentsentrry vault get <key> [--reveal]
-environmentsentrry vault list
-environmentsentrry vault remove <key>
-environmentsentrry -h
+environmentsentry check
+environmentsentry fix
+environmentsentry init
+environmentsentry explain -c "npm run build"
+environmentsentry scan [-r <root>] [-d <depth>] [--json] [--strict] [--include <glob>] [--exclude <glob>]
+environmentsentry usage [-r <root>] [--json] [--watch] [--include <glob>] [--exclude <glob>]
+environmentsentry example [-r <root>] [-o <out>] [--include <glob>] [--exclude <glob>]
+environmentsentry prod [-r <root>] [--force]
+environmentsentry vault init
+environmentsentry vault info
+environmentsentry vault set <key> <value>
+environmentsentry vault get <key> [--reveal]
+environmentsentry vault list
+environmentsentry vault remove <key>
+environmentsentry -h
 ```
 
 ---
@@ -36,7 +36,7 @@ Checks environment variables against `.env.example` across all projects under th
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────┐
-│                         environmentsentrry check                                      │
+│                         environmentsentry check                                      │
 │                    Environment variable diagnosis                          │
 ╔══════════════════════════════════════════════════════════════════════════════╗
 │ Project             │ Variable           │ Status   │ Value   │ Hash        │ Suggestion                              │
@@ -86,7 +86,7 @@ Validates env vars against `.env.example`, creates `.env.production` with empty 
 
 ## vault
 
-Encodes env values and stores them in a local encrypted SQLite database (`.environmentsentrry-vault.sqlite`). Uses **top-level encryption**: AES-256-GCM with PBKDF2-HMAC-SHA256 key derivation (210,000 iterations). Keys are derived from `ENV_DOCTOR_VAULT_PASS` or stored in `.environmentsentrry-vault.key`.
+Encodes env values and stores them in a local encrypted SQLite database (`.environmentsentry-vault.sqlite`). Uses **top-level encryption**: AES-256-GCM with PBKDF2-HMAC-SHA256 key derivation (210,000 iterations). Keys are derived from `ENV_DOCTOR_VAULT_PASS` or stored in `.environmentsentry-vault.key`.
 
 Values are never exposed in plaintext by default:
 
@@ -123,7 +123,7 @@ Values are never exposed in plaintext by default:
 
 ---
 
-## Why environmentsentrry
+## Why environmentsentry
 
 - **Works for any project size** — small, big, large, or huge monorepos
 - **Offline-first** — no API keys, no network calls, fully local
@@ -138,26 +138,26 @@ Values are never exposed in plaintext by default:
 
 ```bash
 # Install
-npm install -g environmentsentrry
+npm install -g environmentsentry
 
 # Create .env from .env.sample
-environmentsentrry fix -e .env.sample
+environmentsentry fix -e .env.sample
 
 # Fill in real values in .env, then verify
-environmentsentrry check
+environmentsentry check
 
 # Scan source code for env usage
-environmentsentrry usage
+environmentsentry usage
 
 # Generate .env.sample from source usage
-environmentsentrry example
+environmentsentry example
 
 # Production setup
-environmentsentrry prod --force
+environmentsentry prod --force
 
 # Secure vault for sensitive values
-environmentsentrry vault init
-environmentsentrry vault set DATABASE_URL "postgres://..."
+environmentsentry vault init
+environmentsentry vault set DATABASE_URL "postgres://..."
 ```
 
 ---
@@ -176,6 +176,6 @@ environmentsentrry vault set DATABASE_URL "postgres://..."
 Built with ❤️ by **Harsh Ovhal**
 
 - GitHub: [https://github.com/H2rsh16](https://github.com/H2rsh16)
-- Project: [environmentsentrry](https://github.com/H2rsh16/environmentsentrry)
+- Project: [environmentsentry](https://github.com/H2rsh16/environmentsentry)
 
 MIT License

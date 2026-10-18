@@ -48,7 +48,7 @@ function issueCount(r: { result: DiagnosisResult }): number {
 
 function printScanReport(root: string, depth: number, reports: Array<{ dir: string; result: DiagnosisResult }>): void {
   console.log("");
-  console.log(renderHeader("environmentsentrry scan", "Multi-project environment diagnosis"));
+  console.log(renderHeader("environmentsentry scan", "Multi-project environment diagnosis"));
   console.log(pc.dim(`   Root: ${root}`));
   console.log(pc.dim(`   Depth: ${depth}`));
   console.log(`   Found ${reports.length} project(s)`);
@@ -94,7 +94,7 @@ function printScanReport(root: string, depth: number, reports: Array<{ dir: stri
   console.log("");
 
   if (withIssues.length > 0) {
-    console.log(renderWarn("Quick fix: run  environmentsentrry fix   (inside each project) to patch missing keys"));
+    console.log(renderWarn("Quick fix: run  environmentsentry fix   (inside each project) to patch missing keys"));
     console.log("");
   } else {
     console.log(renderSuccess("All environment variables across all projects look good!"));

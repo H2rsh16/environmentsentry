@@ -99,19 +99,26 @@ export async function runUsage(opts: UsageOptions): Promise<{ ok: boolean }> {
   const printReport = () => {
     process.stdout.write("\x1b[2J\x1b[H");
     console.log("");
-    console.log(renderHeader("environmentsentrry usage", "Source-code env variable references"));
+    console.log(renderHeader("environmentsentry usage", "Source-code env variable references"));
     console.log(pc.dim(`   Root: ${root}`));
     console.log(pc.dim(`   Files scanned: ${files.length}`));
     console.log("");
 
     if (used.size > 0) {
       console.log(renderSection("Variables used in source code"));
-      const rows = Array.from(used.entries()).map(([key, refs]) => ({
-        key: pc.bold(key),
-        count: String(refs.length),
-        first_file: path.relative(root, refs[0].split(":")[0]),
-        first_line: refs[0].split(":")[1],
-      }));
+      const rows = Array.from(used.entries()).map(([key, refs]) => {
+        const first = refs[0];
+        if (first === undefined) {
+          return { key: pc.bold(key), count: String(refs.length), first_file: "", first_line: "0" };
+        }
+        const parts = first.split(":");
+        return {
+          key: pc.bold(key),
+          count: String(refs.length),
+          first_file: path.relative(root, parts[0] ?? ""),
+          first_line: parts[1] ?? "0",
+        };
+      });
       console.log(renderTable(
         [
           { key: "key", header: "Variable", width: 24, align: "left" },
@@ -161,18 +168,25 @@ export async function runUsage(opts: UsageOptions): Promise<{ ok: boolean }> {
       const actualUnused2 = actualVars.filter((k) => !usedKeys2.has(k));
       process.stdout.write("\x1b[2J\x1b[H");
       console.log("");
-      console.log(renderHeader("environmentsentrry usage (watch mode)", "Source-code env variable references"));
+      console.log(renderHeader("environmentsentry usage (watch mode)", "Source-code env variable references"));
       console.log(pc.dim(`   Root: ${root}`));
       console.log(pc.dim(`   Files scanned: ${f2.length}`));
       console.log("");
       if (u2.size > 0) {
         console.log(renderSection("Variables used in source code"));
-        const rows = Array.from(u2.entries()).map(([key, refs]) => ({
-          key: pc.bold(key),
-          count: String(refs.length),
-          first_file: path.relative(root, refs[0].split(":")[0]),
-          first_line: refs[0].split(":")[1],
-        }));
+        const rows = Array.from(u2.entries()).map(([key, refs]) => {
+          const first = refs[0];
+          if (first === undefined) {
+            return { key: pc.bold(key), count: String(refs.length), first_file: "", first_line: "0" };
+          }
+          const parts = first.split(":");
+          return {
+            key: pc.bold(key),
+            count: String(refs.length),
+            first_file: path.relative(root, parts[0] ?? ""),
+            first_line: parts[1] ?? "0",
+          };
+        });
         console.log(renderTable(
           [
             { key: "key", header: "Variable", width: 24, align: "left" },
