@@ -1,4 +1,4 @@
-import Database from "better-sqlite3";
+import type BetterSqlite3 from "better-sqlite3";
 import * as crypto from "crypto";
 import * as fs from "fs";
 import * as path from "path";
@@ -13,6 +13,46 @@ const KEY_LENGTH = 32;
 const SALT_LENGTH = 16;
 const IV_LENGTH = 12;
 const AUTH_TAG_LENGTH = 16;
+
+export const VAULT_SETUP_COMMANDS = [
+  "npm install -g environmentsentry --allow-scripts=better-sqlite3",
+  "npm config set allow-scripts=better-sqlite3 --location=user",
+  'or add "allowScripts": { "better-sqlite3": true } to your project package.json',
+];
+
+export class VaultUnavailableError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "VaultUnavailableError";
+  }
+}
+
+let cachedModule: typeof BetterSqlite3 | null = null;
+let cachedFailure: string | null = null;
+
+function loadSqlite(): typeof BetterSqlite3 {
+  if (cachedModule) return cachedModule;
+  if (cachedFailure !== null) throw new VaultUnavailableError(cachedFailure);
+  try {
+    const loaded = require("better-sqlite3") as typeof BetterSqlite3;
+    const probe = new loaded(":memory:");
+    probe.close();
+    cachedModule = loaded;
+    return loaded;
+  } catch (e) {
+    cachedFailure = "the better-sqlite3 native module is not built in this installation (" + (e as Error).message.split("\n")[0] + "). npm blocks dependency install scripts by default, so the native SQLite binary was never compiled.";
+    throw new VaultUnavailableError(cachedFailure);
+  }
+}
+
+export function isVaultAvailable(): boolean {
+  try {
+    loadSqlite();
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 function vaultPath(root: string): string { return path.join(root, DB_NAME); }
 function keyPath(root: string): string { return path.join(root, KEY_FILE); }
@@ -61,11 +101,12 @@ function getPass(root: string): string {
 export interface VaultEntry { key: string; updated_at: string; }
 
 export class Vault {
-  private db: Database.Database;
+  private db: BetterSqlite3.Database;
   private pass: string;
   constructor(root: string) {
+    const Sqlite = loadSqlite();
     this.pass = getPass(root);
-    this.db = new Database(vaultPath(root));
+    this.db = new Sqlite(vaultPath(root));
     this.db.pragma("journal_mode = WAL");
     this.db.exec(`
       CREATE TABLE IF NOT EXISTS vault (

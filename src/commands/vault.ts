@@ -1,5 +1,5 @@
 import pc from "picocolors";
-import { Vault, CIPHER_ALGORITHM, VAULT_VERSION, KEY_ITERATIONS, KEY_LENGTH, SALT_LENGTH, IV_LENGTH, AUTH_TAG_LENGTH } from "../core/vault";
+import { Vault, CIPHER_ALGORITHM, VAULT_VERSION, KEY_ITERATIONS, KEY_LENGTH, SALT_LENGTH, IV_LENGTH, AUTH_TAG_LENGTH, VaultUnavailableError, VAULT_SETUP_COMMANDS } from "../core/vault";
 import { log } from "../utils/logger";
 import * as crypto from "crypto";
 import {
@@ -12,8 +12,30 @@ import {
   renderKeyValue,
 } from "../utils/table";
 
+function reportUnavailable(err: unknown): { ok: boolean } {
+  const message = err instanceof VaultUnavailableError ? err.message : (err as Error).message;
+  console.log("");
+  console.log(renderHeader("environmentsentry vault", "Storage unavailable"));
+  console.log("");
+  console.log(renderError("The encrypted vault cannot start in this installation."));
+  console.log("");
+  console.log("  " + pc.dim(message));
+  console.log("");
+  console.log(renderSection("Fix it with one of these"));
+  VAULT_SETUP_COMMANDS.forEach((cmd, i) => console.log(`  ${i + 1}. ${pc.cyan(cmd)}`));
+  console.log("");
+  console.log(renderInfo("Every other command (check, fix, scan, usage, example, prod) works without this."));
+  console.log("");
+  return { ok: false };
+}
+
 export function runVaultInit(root: string): { ok: boolean } {
-  const vault = new Vault(root);
+  let vault: Vault;
+  try {
+    vault = new Vault(root);
+  } catch (e) {
+    return reportUnavailable(e);
+  }
   vault.close();
   console.log(renderHeader("environmentsentry vault init", "Encrypted vault database initialized"));
   console.log(renderSuccess(`Vault initialized at ${root}/.environmentsentry-vault.sqlite`));
@@ -35,7 +57,12 @@ export function runVaultInit(root: string): { ok: boolean } {
 }
 
 export function runVaultSet(root: string, key: string, value: string): { ok: boolean } {
-  const vault = new Vault(root);
+  let vault: Vault;
+  try {
+    vault = new Vault(root);
+  } catch (e) {
+    return reportUnavailable(e);
+  }
   vault.set(key, value);
   vault.close();
   console.log(renderSuccess(`Stored ${pc.bold(key)} in vault (encoded at rest).`));
@@ -44,7 +71,12 @@ export function runVaultSet(root: string, key: string, value: string): { ok: boo
 }
 
 export function runVaultGet(root: string, key: string, reveal: boolean): { ok: boolean } {
-  const vault = new Vault(root);
+  let vault: Vault;
+  try {
+    vault = new Vault(root);
+  } catch (e) {
+    return reportUnavailable(e);
+  }
   const value = vault.get(key);
   vault.close();
   if (value === null) {
@@ -65,7 +97,12 @@ export function runVaultGet(root: string, key: string, reveal: boolean): { ok: b
 }
 
 export function runVaultList(root: string): { ok: boolean } {
-  const vault = new Vault(root);
+  let vault: Vault;
+  try {
+    vault = new Vault(root);
+  } catch (e) {
+    return reportUnavailable(e);
+  }
   const entries = vault.list();
   vault.close();
   console.log(renderHeader("environmentsentry vault list", "Stored vault keys"));
@@ -106,7 +143,12 @@ export function runVaultInfo(root: string): { ok: boolean } {
 }
 
 export function runVaultRemove(root: string, key: string): { ok: boolean } {
-  const vault = new Vault(root);
+  let vault: Vault;
+  try {
+    vault = new Vault(root);
+  } catch (e) {
+    return reportUnavailable(e);
+  }
   if (!vault.has(key)) {
     vault.close();
     console.log(renderError(`${pc.bold(key)} not found in vault.`));

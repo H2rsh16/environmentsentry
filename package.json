@@ -1,6 +1,6 @@
 {
   "name": "environmentsentry",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Deterministic, offline-first env scanner. Diagnose missing/invalid environment variables, explain errors in plain English, and fix them across any project size.",
   "keywords": [
     "env",
@@ -46,7 +46,7 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "better-sqlite3": "^11.0.0",
+    "better-sqlite3": "11.10.0",
     "commander": "^12.1.0",
     "execa": "^9.4.0",
     "picocolors": "^1.1.0"
@@ -64,6 +64,9 @@
     "url": "https://github.com/H2rsh16/environmentsentry/issues"
   },
   "homepage": "https://github.com/H2rsh16/environmentsentry#readme",
+  "allowScripts": {
+    "better-sqlite3": true
+  },
   "publishConfig": {
     "access": "public"
   }

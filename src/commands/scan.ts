@@ -39,7 +39,7 @@ function checkProject(dir: string): DiagnosisResult | null {
   const detected = detectEnvFiles(dir, ".env", ".env.example");
   const expected = detected.exampleExists ? parseEnv(detected.examplePath).vars : [];
   const actual = detected.envExists ? parseEnv(detected.envPath).vars : [];
-  return validate(detected.envPath, expected, actual);
+  return validate(".env", expected, actual, ".env.example");
 }
 
 function issueCount(r: { result: DiagnosisResult }): number {

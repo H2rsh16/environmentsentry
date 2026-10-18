@@ -2,5 +2,13 @@ node_modules/
 dist/
 .env
 .env.local
+.env.production
+.envsentry-vault*
+.environmentsentry-vault*
+*.key
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.tgz
 *.log
 .DS_Store

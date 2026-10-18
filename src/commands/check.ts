@@ -55,7 +55,7 @@ function checkProject(dir: string, file: string, example: string): DiagnosisResu
   const detected = detectEnvFiles(dir, file, example);
   const expected = detected.exampleExists ? parseEnv(detected.examplePath).vars : [];
   const actual = detected.envExists ? parseEnv(detected.envPath).vars : [];
-  return validate(detected.envPath, expected, actual);
+  return validate(file, expected, actual, example);
 }
 
 function maskValue(): string { return "****"; }
@@ -116,7 +116,7 @@ function printCheckTable(root: string, reports: Array<{ dir: string; result: Dia
         { key: "status", header: "Status", width: 10, align: "left", color: "default" },
         { key: "value", header: "Value", width: 10, align: "left", color: "default" },
         { key: "hash", header: "Hash", width: 14, align: "left", color: "default" },
-        { key: "suggestion", header: "Suggestion", width: 42, align: "left", color: "default" },
+        { key: "suggestion", header: "Suggestion", width: 58, align: "left", color: "default" },
       ],
       rows,
     ));
