@@ -1,0 +1,70 @@
+{
+  "name": "environmentsentrry",
+  "version": "1.0.0",
+  "description": "Deterministic, offline-first env scanner. Diagnose missing/invalid environment variables, explain errors in plain English, and fix them across any project size.",
+  "keywords": [
+    "env",
+    "dotenv",
+    "environment",
+    "diagnostics",
+    "scanner",
+    "doctor",
+    "cli",
+    "developer-tools",
+    "offline",
+    "security",
+    "vault",
+    "encryption"
+  ],
+  "author": {
+    "name": "Harsh Ovhal",
+    "email": "contact@environmentsentrry.dev",
+    "url": "https://github.com/H2rsh16"
+  },
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "environmentsentrry": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "docs",
+    "examples"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepublishOnly": "npm run build",
+    "test": "node --test tests/*.test.js",
+    "clean": "rm -rf dist",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.0.0",
+    "commander": "^12.1.0",
+    "execa": "^9.4.0",
+    "picocolors": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/node": "^22.5.0",
+    "typescript": "^5.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/H2rsh16/environmentsentrry.git"
+  },
+  "bugs": {
+    "url": "https://github.com/H2rsh16/environmentsentrry/issues"
+  },
+  "homepage": "https://github.com/H2rsh16/environmentsentrry#readme",
+  "publishConfig": {
+    "access": "public"
+  }
+}
